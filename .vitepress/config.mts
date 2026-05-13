@@ -66,6 +66,10 @@ export default defineConfig({
     ['link', { rel: 'alternate', hreflang: 'en-US', href: 'https://rustfs.org' }],
     ['link', { rel: 'alternate', hreflang: 'zh-CN', href: 'https://rustfs.org.cn' }],
     [
+      'meta', 
+      { name: 'baidu-site-verification', content: 'codeva-7IXhiNbaTX' }
+    ],
+    [
       'script',
       {
         async: '',

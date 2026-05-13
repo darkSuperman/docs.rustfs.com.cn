@@ -17,7 +17,7 @@ export default defineConfig({
   themeConfig: {
     siteTitle: false,
     logo: { src: '/images/logo.svg', height: 24 },
-    logoLink: { link: 'https://rustfs.com', target: '_blank' },
+    logoLink: { link: 'https://rustfs.org.cn', target: '_blank' },
     editLink: {
       pattern: 'https://github.com/rustfs/docs.rustfs.com.cn/edit/main/docs/:path',
       text: '在 GitHub 上编辑此页面'
@@ -62,47 +62,71 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' }],
     ['link', { rel: 'manifest', href: '/site.webmanifest' }],
     // alternate links
-    ['link', { rel: 'alternate', hreflang: 'x-default', href: 'https://docs.rustfs.com' }],
-    ['link', { rel: 'alternate', hreflang: 'en-US', href: 'https://docs.rustfs.com' }],
-    ['link', { rel: 'alternate', hreflang: 'zh-CN', href: 'https://docs.rustfs.com.cn' }],
-    ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-TWW7WMTWL9' }],
-
+    ['link', { rel: 'alternate', hreflang: 'x-default', href: 'https://rustfs.org' }],
+    ['link', { rel: 'alternate', hreflang: 'en-US', href: 'https://rustfs.org' }],
+    ['link', { rel: 'alternate', hreflang: 'zh-CN', href: 'https://rustfs.org.cn' }],
     [
       'script',
-      {},
-      `window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-TWW7WMTWL9');`,
+      {
+        async: '',
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4730219879070419',
+        crossorigin: 'anonymous'
+      }
     ],
-
+    // 注入全局 Canonical 脚本（动态生成规范链接）
     [
       'script',
       {},
       `
-      var _hmt = _hmt || [];
       (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?968e7103a8e28fb30f7d69e42b7c82bc";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
+        // 每当路由变化或页面加载时执行
+        var link = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+        link.rel = 'canonical';
+        link.href = 'https://rustfs.org.cn' + window.location.pathname.replace(/.html$/, '');
+        if (!document.querySelector('link[rel="canonical"]')) {
+          document.head.appendChild(link);
+        }
       })();
-    `,
-    ],
+      `
+    ]
+    // ['script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-TWW7WMTWL9' }],
+
+    // [
+    //   'script',
+    //   {},
+    //   `window.dataLayer = window.dataLayer || [];
+    //   function gtag(){dataLayer.push(arguments);}
+    //   gtag('js', new Date());
+    //   gtag('config', 'G-TWW7WMTWL9');`,
+    // ],
+
+    // [
+    //   'script',
+    //   {},
+    //   `
+    //   var _hmt = _hmt || [];
+    //   (function() {
+    //     var hm = document.createElement("script");
+    //     hm.src = "https://hm.baidu.com/hm.js?968e7103a8e28fb30f7d69e42b7c82bc";
+    //     var s = document.getElementsByTagName("script")[0];
+    //     s.parentNode.insertBefore(hm, s);
+    //   })();
+    // `,
+    // ],
   ],
   srcDir: 'docs',
   sitemap: {
-    hostname: 'https://docs.rustfs.com.cn',
+    hostname: 'https://rustfs.org.cn',
   },
   markdown: {
     math: true,
     codeTransformers: [
       // We use `[!!code` in demo to prevent transformation, here we revert it back.
-      {
-        postprocess(code) {
-          return code.replace(/\[\!\!code/g, '[!code')
-        }
-      }
+      // {
+      //   postprocess(code) {
+      //     return code.replace(/\[\!\!code/g, '[!code')
+      //   }
+      // }
     ],
     config(md) {
       // TODO: remove when https://github.com/vuejs/vitepress/issues/4431 is fixed
